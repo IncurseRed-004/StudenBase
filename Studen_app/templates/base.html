@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Student Management System{% endblock %}</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #eef2ff, #f5f3ff, #e0e7ff);
+            color: #1e1b4b;
+        }
+
+        /* Navigation bar */
+        .navbar {
+            width: 100%;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(118, 75, 162, 0.12);
+        }
+
+        .navbar .logo {
+            font-size: 21px;
+            font-weight: 800;
+            color: #5b4bc4;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .navbar .logo span {
+            color: #764ba2;
+        }
+
+        .navbar .nav-label {
+            font-size: 13px;
+            color: #77758c;
+        }
+
+        /* Main page content */
+        .main-content {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 20px;
+            text-align: center;
+            color: #89879d;
+            font-size: 12px;
+        }
+
+        .footer span {
+            color: #7069d9;
+            font-weight: 600;
+        }
+
+        @media (max-width: 576px) {
+            .navbar {
+                padding: 18px 5%;
+            }
+
+            .navbar .logo {
+                font-size: 18px;
+            }
+
+            .navbar .nav-label {
+                font-size: 11px;
+            }
+
+            .main-content {
+                padding: 20px 12px;
+            }
+        }
+    </style>
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="#" class="logo">
+            Student<span>Hub</span>
+        </a>
+
+        <div class="nav-label">
+            Student Management System
+        </div>
+    </nav>
+
+    <main class="main-content">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="footer">
+        Built for learning <span>&bull;</span> StudentHub
+    </footer>
+
+</body>
+</html>

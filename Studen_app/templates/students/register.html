@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Student Registration{% endblock %}
+
+{% block content %}
+
+
+<div class="registration-card">
+
+    <div class="registration-header">
+
+        <div class="registration-icon">
+            &#127891;
+        </div>
+
+        <h1>Student Registration</h1>
+
+        <p>Enter your details to register a new student.</p>
+
+    </div>
+
+    <form method="POST" class="registration-form">
+
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="form-errors">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        {% for field in form %}
+
+            <p>
+                {{ field.label_tag }}
+
+                {{ field }}
+
+                {% if field.help_text %}
+                    <small>{{ field.help_text }}</small>
+                {% endif %}
+
+                {% for error in field.errors %}
+                    <span style="display:block; color:#dc2626; font-size:12px; margin-top:6px;">
+                        {{ error }}
+                    </span>
+                {% endfor %}
+            </p>
+
+        {% endfor %}
+
+        <button type="submit" class="register-btn">
+            Register Student &rarr;
+        </button>
+
+    </form>
+
+    <div class="registration-footer">
+        Student Management System <span>&bull;</span> Registration Portal
+    </div>
+
+</div>
+
+</div>
+
+{% endblock %}

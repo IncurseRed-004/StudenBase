@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+
+{% block title %}Student List{% endblock %}
+
+{% block content %}
+
+<style>
+    .student-page {
+        max-width: 900px;
+        margin: 20px auto;
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 25px;
+    }
+
+    .page-header h1 {
+        font-size: 28px;
+        color: #1e1b4b;
+        margin-bottom: 6px;
+    }
+
+    .page-header p {
+        color: #77758c;
+        font-size: 14px;
+    }
+
+    .add-btn {
+        text-decoration: none;
+        background: #6558d3;
+        color: white;
+        padding: 11px 16px;
+        border-radius: 9px;
+        font-size: 14px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .add-btn:hover {
+        background: #5145b5;
+    }
+
+    .student-card {
+        background: white;
+        border: 1px solid #e8e8f0;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(30, 27, 75, 0.04);
+    }
+
+    .student-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        padding: 18px 22px;
+        border-bottom: 1px solid #eeeeF5;
+    }
+
+    .student-row:last-child {
+        border-bottom: none;
+    }
+
+    .student-info h3 {
+        font-size: 15px;
+        color: #29264b;
+        margin-bottom: 5px;
+    }
+
+    .student-info p {
+        font-size: 13px;
+        color: #89879d;
+    }
+
+    .student-number {
+        width: 38px;
+        height: 38px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        border-radius: 10px;
+        background: #f0efff;
+        color: #6558d3;
+        font-weight: 700;
+        font-size: 13px;
+    }
+
+    .student-left {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 50px 20px;
+        color: #77758c;
+    }
+
+    .empty-state h3 {
+        color: #29264b;
+        margin-bottom: 8px;
+    }
+
+    @media (max-width: 576px) {
+        .page-header h1 {
+            font-size: 23px;
+        }
+
+        .page-header {
+            align-items: flex-start;
+        }
+
+        .student-row {
+            padding: 16px;
+        }
+    }
+</style>
+
+<div class="student-page">
+
+    <div class="page-header">
+        <div>
+            <h1>Students</h1>
+            <p>Manage your registered students.</p>
+        </div>
+
+        <a href="{% url 'register_students' %}" class="add-btn">
+            + Add Student
+        </a>
+    </div>
+
+    <div class="student-card">
+
+        {% for student in students %}
+            <div class="student-row">
+
+                <div class="student-left">
+                    <div class="student-number">
+                        {{ forloop.counter }}
+                    </div>
+
+                    <div class="student-info">
+                        <h3>{{ student }}</h3>
+                        <p>Registered student</p>
+                    </div>
+                </div>
+
+            </div>
+
+        {% empty %}
+            <div class="empty-state">
+                <h3>No students yet</h3>
+                <p>Add your first student to get started.</p>
+            </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}
