@@ -11,12 +11,19 @@ def register_students(request):
         form = studentForm(request.POST)
 
         if form.is_valid():
-            form.save()
+            student = form.save()
+            return redirect('student_dashboard',id =student.id)
 
     else:
         form = studentForm()
 
     return render(request,'students/register.html',{'form':form})
+#dashboard
+
+def student_dashboard(request,id):
+    student =get_object_or_404(Students,id=id)
+    return render(request,'students/student_dashboard.html',{'student':student})
+
 
 #student list
 def student_list(request):
@@ -43,3 +50,4 @@ def delete_student(request,id):
     student = get_object_or_404(Students, id =id)
     student.delete()
     return redirect('student_list')
+

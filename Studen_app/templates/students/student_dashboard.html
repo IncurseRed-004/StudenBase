@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %}Student Dashboard{% endblock %}
+
+{% block content %}
+
+<style>
+    .dashboard {
+        max-width: 750px;
+        margin: 40px auto;
+        padding: 25px;
+    }
+
+    .welcome {
+        background: linear-gradient(135deg, #6558d3, #8b5cf6);
+        color: white;
+        padding: 30px;
+        border-radius: 15px;
+        margin-bottom: 25px;
+    }
+
+    .details {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        border: 1px solid #e5e7eb;
+    }
+
+    .detail-row {
+        padding: 15px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .detail-row:last-child {
+        border-bottom: none;
+    }
+
+    .label {
+        color: #777;
+        font-size: 14px;
+    }
+
+    .value {
+        color: #252044;
+        font-weight: 600;
+        margin-top: 5px;
+    }
+
+    .dashboard-btn {
+        display: inline-block;
+        background: #6558d3;
+        color: white;
+        padding: 10px 18px;
+        border-radius: 8px;
+        text-decoration: none;
+        margin-top: 20px;
+    }
+
+    .dashboard-btn:hover {
+        background: #5145b5;
+        color: white;
+    }
+</style>
+
+<div class="dashboard">
+
+    <div class="welcome">
+        <h2>Welcome, {{ student.name }}!</h2>
+        <p class="mb-0">Your student registration was successful.</p>
+    </div>
+
+    <div class="details">
+        <h4 class="mb-3">Student Details</h4>
+
+        <div class="detail-row">
+            <div class="label">Full Name</div>
+            <div class="value">{{ student.name }}</div>
+        </div>
+
+        <div class="detail-row">
+            <div class="label">Age</div>
+            <div class="value">{{ student.age }}</div>
+        </div>
+
+        <div class="detail-row">
+            <div class="label">Email</div>
+            <div class="value">{{ student.email }}</div>
+        </div>
+
+        <div class="detail-row">
+            <div class="label">Phone</div>
+            <div class="value">{{ student.phone }}</div>
+        </div>
+
+        <div class="detail-row">
+            <div class="label">Course</div>
+            <div class="value">{{ student.course }}</div>
+        </div>
+
+        <a href="{% url 'student_list' %}" class="dashboard-btn">
+            View All Students &rarr;
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

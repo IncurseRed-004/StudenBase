@@ -9,5 +9,5 @@ class Students(models.Model):
     course = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
 
-    def __self__(self):
+    def __str__(self):
         return self.name

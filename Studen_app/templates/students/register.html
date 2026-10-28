@@ -1,66 +1,172 @@
 {% extends 'base.html' %}
 
-{% block title %}Student Registration{% endblock %}
+{% block title %}Register Student{% endblock %}
 
 {% block content %}
 
+<style>
+    .register-wrapper {
+        min-height: 75vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 30px 15px;
+    }
 
-<div class="registration-card">
+    .register-card {
+        width: 100%;
+        max-width: 480px;
+        background: #ffffff;
+        border-radius: 18px;
+        padding: 35px;
+        box-shadow: 0 8px 30px rgba(40, 35, 100, 0.08);
+        border: 1px solid #e9e8f3;
+    }
 
-    <div class="registration-header">
+    .register-icon {
+        width: 55px;
+        height: 55px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 18px;
+        border-radius: 15px;
+        background: #eeebff;
+        color: #6558d3;
+        font-size: 27px;
+    }
 
-        <div class="registration-icon">
-            &#127891;
-        </div>
+    .register-title {
+        text-align: center;
+        font-size: 26px;
+        font-weight: 700;
+        color: #242044;
+        margin-bottom: 8px;
+    }
 
-        <h1>Student Registration</h1>
+    .register-subtitle {
+        text-align: center;
+        color: #85839a;
+        font-size: 14px;
+        margin-bottom: 28px;
+    }
 
-        <p>Enter your details to register a new student.</p>
+    .register-card label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        color: #393650;
+        margin-bottom: 7px;
+    }
+
+    .register-card input,
+    .register-card select,
+    .register-card textarea {
+        display: block;
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid #dedde8;
+        border-radius: 9px;
+        background: #ffffff;
+        font-size: 14px;
+        box-sizing: border-box;
+        transition: 0.2s;
+    }
+
+    .register-card input:focus,
+    .register-card select:focus,
+    .register-card textarea:focus {
+        outline: none;
+        border-color: #6558d3;
+        box-shadow: 0 0 0 3px rgba(101, 88, 211, 0.12);
+    }
+
+    .register-field {
+        margin-bottom: 19px;
+    }
+
+    .register-btn {
+        width: 100%;
+        padding: 12px;
+        background: #6558d3;
+        color: white;
+        border: none;
+        border-radius: 9px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .register-btn:hover {
+        background: #5145b5;
+    }
+
+    .register-cancel {
+        display: block;
+        text-align: center;
+        margin-top: 17px;
+        color: #77738e;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .register-cancel:hover {
+        color: #6558d3;
+    }
+
+    @media (max-width: 500px) {
+        .register-card {
+            padding: 25px 20px;
+        }
+    }
+</style>
+
+<div class="register-wrapper">
+    <div class="register-card">
+
+        <div class="register-icon">&#127891;</div>
+
+        <h2 class="register-title">Register Student</h2>
+        <p class="register-subtitle">
+            Fill in the details to add a new student.
+        </p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {% for field in form %}
+                <div class="register-field">
+
+                    <label for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                    </label>
+
+                    {{ field }}
+
+                    {% for error in field.errors %}
+                        <small class="text-danger">{{ error }}</small>
+                    {% endfor %}
+
+                </div>
+            {% endfor %}
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <button type="submit" class="register-btn">
+                Register Student &rarr;
+            </button>
+
+            <a href="{% url 'student_list' %}" class="register-cancel">
+                Cancel and return to student list
+            </a>
+
+        </form>
 
     </div>
-
-    <form method="POST" class="registration-form">
-
-        {% csrf_token %}
-
-        {% if form.non_field_errors %}
-            <div class="form-errors">
-                {{ form.non_field_errors }}
-            </div>
-        {% endif %}
-
-        {% for field in form %}
-
-            <p>
-                {{ field.label_tag }}
-
-                {{ field }}
-
-                {% if field.help_text %}
-                    <small>{{ field.help_text }}</small>
-                {% endif %}
-
-                {% for error in field.errors %}
-                    <span style="display:block; color:#dc2626; font-size:12px; margin-top:6px;">
-                        {{ error }}
-                    </span>
-                {% endfor %}
-            </p>
-
-        {% endfor %}
-
-        <button type="submit" class="register-btn">
-            Register Student &rarr;
-        </button>
-
-    </form>
-
-    <div class="registration-footer">
-        Student Management System <span>&bull;</span> Registration Portal
-    </div>
-
-</div>
-
 </div>
 
 {% endblock %}

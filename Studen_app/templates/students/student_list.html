@@ -10,6 +10,7 @@
         margin: 20px auto;
     }
 
+    /* Header */
     .page-header {
         display: flex;
         justify-content: space-between;
@@ -29,6 +30,7 @@
         font-size: 14px;
     }
 
+    /* Add button */
     .add-btn {
         text-decoration: none;
         background: #6558d3;
@@ -38,12 +40,14 @@
         font-size: 14px;
         font-weight: 600;
         white-space: nowrap;
+        transition: background 0.2s;
     }
 
     .add-btn:hover {
         background: #5145b5;
     }
 
+    /* Student list card */
     .student-card {
         background: white;
         border: 1px solid #e8e8f0;
@@ -56,8 +60,8 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        gap: 15px;
-        padding: 18px 22px;
+        gap: 20px;
+        padding: 20px 22px;
         border-bottom: 1px solid #eeeeF5;
     }
 
@@ -65,20 +69,17 @@
         border-bottom: none;
     }
 
-    .student-info h3 {
-        font-size: 15px;
-        color: #29264b;
-        margin-bottom: 5px;
-    }
-
-    .student-info p {
-        font-size: 13px;
-        color: #89879d;
+    /* Student information */
+    .student-left {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        min-width: 0;
     }
 
     .student-number {
-        width: 38px;
-        height: 38px;
+        width: 40px;
+        height: 40px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -90,12 +91,58 @@
         font-size: 13px;
     }
 
-    .student-left {
-        display: flex;
-        align-items: center;
-        gap: 14px;
+    .student-info h3 {
+        font-size: 16px;
+        color: #29264b;
+        margin-bottom: 7px;
+        overflow-wrap: anywhere;
     }
 
+    .student-info p {
+        font-size: 13px;
+        color: #77758c;
+        margin-top: 4px;
+        overflow-wrap: anywhere;
+    }
+
+    /* Edit and Delete buttons */
+    .student-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+    }
+
+    .edit-btn,
+    .delete-btn {
+        display: inline-block;
+        padding: 9px 13px;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background 0.2s;
+    }
+
+    .edit-btn {
+        color: #5b4bc4;
+        background: #f0efff;
+    }
+
+    .edit-btn:hover {
+        background: #e2dfff;
+    }
+
+    .delete-btn {
+        color: #dc2626;
+        background: #fef2f2;
+    }
+
+    .delete-btn:hover {
+        background: #fee2e2;
+    }
+
+    /* Empty state */
     .empty-state {
         text-align: center;
         padding: 50px 20px;
@@ -105,25 +152,44 @@
     .empty-state h3 {
         color: #29264b;
         margin-bottom: 8px;
+        font-size: 18px;
     }
 
-    @media (max-width: 576px) {
-        .page-header h1 {
-            font-size: 23px;
-        }
+    .empty-state p {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
 
+    /* Responsive design */
+    @media (max-width: 576px) {
         .page-header {
             align-items: flex-start;
         }
 
+        .page-header h1 {
+            font-size: 23px;
+        }
+
         .student-row {
-            padding: 16px;
+            align-items: flex-start;
+            flex-direction: column;
+            padding: 18px 16px;
+            gap: 15px;
+        }
+
+        .student-actions {
+            margin-left: 54px;
+        }
+
+        .student-info h3 {
+            font-size: 15px;
         }
     }
 </style>
 
 <div class="student-page">
 
+    <!-- Page header -->
     <div class="page-header">
         <div>
             <h1>Students</h1>
@@ -135,29 +201,67 @@
         </a>
     </div>
 
+    <!-- Student list -->
     <div class="student-card">
 
         {% for student in students %}
+
             <div class="student-row">
 
+                <!-- Student details -->
                 <div class="student-left">
+
                     <div class="student-number">
                         {{ forloop.counter }}
                     </div>
 
                     <div class="student-info">
-                        <h3>{{ student }}</h3>
-                        <p>Registered student</p>
+                        <h3>{{ student.name }}</h3>
+
+                        <p>
+                            {{ student.email }} &bull; Age: {{ student.age }}
+                        </p>
+
+                        <p>
+                            Course: {{ student.course }}
+                        </p>
+
+                        <p>
+                            Phone: {{ student.phone }}
+                        </p>
                     </div>
+
+                </div>
+
+                <!-- Actions -->
+                <div class="student-actions">
+
+                    <a href="{% url 'edit_student' student.id %}"
+                       class="edit-btn">
+                        Edit
+                    </a>
+
+                    <a href="{% url 'delete_student' student.id %}"
+                       class="delete-btn"
+                       onclick="return confirm('Are you sure you want to delete this student?');">
+                        Delete
+                    </a>
+
                 </div>
 
             </div>
 
         {% empty %}
+
             <div class="empty-state">
                 <h3>No students yet</h3>
                 <p>Add your first student to get started.</p>
+
+                <a href="{% url 'register_students' %}" class="add-btn">
+                    + Add Student
+                </a>
             </div>
+
         {% endfor %}
 
     </div>
